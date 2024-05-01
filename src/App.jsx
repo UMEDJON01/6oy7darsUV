@@ -22,6 +22,9 @@ import Singup from "./pages/Singup";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebaseConfin";
 
+//actions
+import { action as SignupActions } from "./pages/Singup";
+
 function App() {
   const { user, dispatch, authReady } = useContext(GlobalContext);
 
@@ -59,6 +62,7 @@ function App() {
     {
       path: "/singup",
       element: user ? <Navigate to="/" /> : <Singup />,
+      action: SignupActions,
     },
   ]);
 
