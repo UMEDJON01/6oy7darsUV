@@ -1,4 +1,4 @@
-import { Form, useActionData } from "react-router-dom";
+import { Form, Link, useActionData } from "react-router-dom";
 
 import { FcGoogle } from "react-icons/fc";
 import { useSingup } from "../hooks/useSingup";
@@ -27,6 +27,9 @@ function Singup() {
           <Forminput label="Email" type="email" name="email" />
           <Forminput label="Image" type="url" name="image" />
           <Forminput label="Password" type="text" name="password" />
+          <Link to="/login">
+            <button className="mt-2 mb-3 border btn btn-primary w-full">Login</button>
+          </Link>
           <button
             onClick={registerWithEmailAndPassword}
             type="submit"
