@@ -1,15 +1,18 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../context/useGlobal";
 
 function Cart() {
   const { data } = useContext(GlobalContext);
-  console.log(data);
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    setCartItems((prevItems) => [...prevItems, ...data]);
+  }, [data]);
 
   return (
     <div className="align-content">
-      <div>Cart</div>
       <ul>
-        {data.map((item) => (
+        {cartItems.map((item) => (
           <li key={item.id}>
             <img src={item.thumbnail} alt={item.description} />
             <p>{item.description}</p>
