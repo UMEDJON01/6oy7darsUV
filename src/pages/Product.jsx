@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfin";
 
 function Product() {
   const { id } = useParams();
@@ -9,12 +11,17 @@ function Product() {
     Error,
   } = useFetch("https://dummyjson.com/products/" + id);
 
-  console.log(product);
+  const addDocDb = async () => {
+    await addDoc(collection(db, "products"),product);
+  };
   return (
     <>
       {product && (
         <div className="align-content">
           <h1 className="text-4xl mb-5">{product.title}</h1>
+          <button onClick={addDocDb} className="btn btn-primary">
+            Add to Cart
+          </button>
           <div className="carousel carousel-center p-4 space-x-3 bg-neutral rounded-box">
             {product.images.map((image) => {
               return (

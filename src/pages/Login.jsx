@@ -1,73 +1,58 @@
-import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { NavLink, useNavigate } from "react-router-dom";
-import { auth } from "../firebase/firebaseConfin";
+import { Form, Link, useActionData } from "react-router-dom";
+
+import { FcGoogle } from "react-icons/fc";
+import { useSingup } from "../hooks/useSingup";
+import Forminput from "../components/Forminput";
+import { useEffect } from "react";
+import "../hooks/useLogin";
+import { useLogin } from "../hooks/useLogin";
+
+export const action = async ({ request }) => {
+  let formData = await request.formData();
+  let email = formData.get("email");
+  let password = formData.get("password");
+
+  return { email, password };
+};
 
 function Login() {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { signUpWithGoogle } = useSingup();
+  const { loginWithEmailAndPassword } = useLogin();
+  const actionData = useActionData();
 
-  const onLogin = (e) => {
-    e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        navigate("/");
-        console.log(user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
-  };
+  useEffect(() => {
+    if (actionData) {
+      loginWithEmailAndPassword(actionData);
+    }
+  }, [actionData]);
 
   return (
-    <>
-      <main>
-        <section>
-          <div>
-            <p> FocusApp </p>
-            <form>
-              <div>
-                <label htmlFor="email-address">Email address</label>
-                <input
-                  className="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 dark:placeholder-gray-400 h-10 w-80"
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  required
-                  placeholder="Email address"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
+    <div className="min-h-screen grid place-content-center w-full">
+      <div className="mb-3">
+        <h1 className=" text-4xl font-bold text-center">Login</h1>
+        <Form method="post" className="mb-3 w-96">
+          <Forminput label="Email" type="email" name="email" />
 
-              <div>
-                <label htmlFor="password">Password</label>
-                <input
-                className="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 dark:placeholder-gray-400 h-10 w-80"
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  placeholder="Password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
+          <Forminput label="Password" type="text" name="password" />
 
-              <div>
-                <button className="border border-red m-2 p-2 pointer" onClick={onLogin}>Login</button>
-              </div>
-            </form>
-
-            <p className="text-sm text-white text-center">
-              No account yet? <NavLink to="/signup">Sign up</NavLink>
-            </p>
-          </div>
-        </section>
-      </main>
-    </>
+          <button className="btn btn-primary w-full  mt-5">Submit</button>
+        </Form>
+      </div>
+      <div>
+        <button
+          onClick={signUpWithGoogle}
+          className="btn btn-secondary  w-full"
+        >
+          <FcGoogle className="h-5 w-5" /> Login
+        </button>
+        <p className="mt-4  text-center">
+          Do not have Account yet ?
+          <Link to="/singup" className=" link link-primary font-extrabold">
+            SignUp
+          </Link>
+        </p>
+      </div>
+    </div>
   );
 }
 

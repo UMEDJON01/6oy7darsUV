@@ -17,14 +17,6 @@ import { useActionData } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 function useSingup() {
-  const actionData = useActionData();
-
-  useEffect(() => {
-    if (actionData) {
-      registerWithEmailAndPassword(actionData);
-    }
-  }, [actionData]);
-
   const { dispatch } = useContext(GlobalContext);
 
   const signUpWithGoogle = () => {
@@ -67,7 +59,7 @@ function useSingup() {
         // ..
       });
   };
-  return { signUpWithGoogle };
+  return { signUpWithGoogle, registerWithEmailAndPassword };
 }
 
 export { useSingup };
