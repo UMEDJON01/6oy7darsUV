@@ -43,7 +43,6 @@ function useSingup() {
   const registerWithEmailAndPassword = (actionData) => {
     createUserWithEmailAndPassword(auth, actionData.email, actionData.password)
       .then(async (userCredential) => {
-        // Signed up
         const user = userCredential.user;
         await updateProfile(auth.currentUser, {
           displayName: actionData.name,

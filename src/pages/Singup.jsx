@@ -1,5 +1,4 @@
 import { Form, Link, useActionData } from "react-router-dom";
-
 import { FcGoogle } from "react-icons/fc";
 import { useSingup } from "../hooks/useSingup";
 import Forminput from "../components/Forminput";
@@ -18,7 +17,6 @@ export const action = async ({ request }) => {
 
 function Singup() {
   const { signUpWithGoogle, registerWithEmailAndPassword } = useSingup();
-
   const actionData = useActionData();
 
   useEffect(() => {
@@ -28,30 +26,33 @@ function Singup() {
   }, [actionData]);
 
   return (
-    <div className="min-h-screen grid place-content-center w-full">
-      <div className="mb-3">
-        <h1 className=" text-4xl font-bold text-center">SignUp</h1>
-        <Form method="post" className="mb-3 w-96">
+    <div
+      className="min-h-screen bg-cover bg-center flex items-center justify-center"
+      style={{
+        backgroundImage: "url('https://media.istockphoto.com/id/1420039900/photo/cyber-security-ransomware-email-phishing-encrypted-technology-digital-information-protected.jpg?s=2048x2048&w=is&k=20&c=H2DW0WcG6v9JZow-0XW31UVcCV63q41zpJk-d8kmIY0=')",
+      }}
+    >
+      <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h1 className="text-4xl font-bold text-center mb-6">Sign Up</h1>
+        <Form method="post" className="space-y-4">
           <Forminput label="Display Name" type="text" name="displayName" />
           <Forminput label="Email" type="email" name="email" />
-          <Forminput label="Image" type="url" name="image" />
-          <Forminput label="Password" type="text" name="password" />
+          <Forminput label="Image URL" type="url" name="image" />
+          <Forminput label="Password" type="password" name="password" />
           <div className="mt-5">
             <SubmitBtn onClick={registerWithEmailAndPassword} text="Submit" />
           </div>
         </Form>
-      </div>
-      <div>
         <button
           onClick={signUpWithGoogle}
           type="button"
-          className="btn btn-secondary  w-full"
+          className="btn btn-secondary w-full flex items-center justify-center mt-4"
         >
-          <FcGoogle className="h-5 w-5" /> Singup
+          <FcGoogle className="h-5 w-5 mr-2" /> Sign up with Google
         </button>
         <p className="mt-4 text-center">
-          Already registerd ?
-          <Link to="/login" className=" link link-primary font-extrabold">
+          Already registered?{" "}
+          <Link to="/login" className="link link-primary font-extrabold">
             Login
           </Link>
         </p>

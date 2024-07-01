@@ -16,7 +16,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 
 import Contact from "./pages/Contact";
-import Product from "./pages/Product";
+
 import Login from "./pages/Login";
 import Singup from "./pages/Singup";
 import { onAuthStateChanged } from "firebase/auth";
@@ -28,7 +28,6 @@ import { action as LoginActions } from "./pages/Login";
 
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebase/firebaseConfin";
-import Cart from "./pages/Cart";
 
 function App() {
   const { user, dispatch, authReady } = useContext(GlobalContext);
@@ -53,14 +52,6 @@ function App() {
         {
           path: "/contact",
           element: <Contact />,
-        },
-        {
-          path: "/product/:id",
-          element: <Product />,
-        },
-        {
-          path: "/cart",
-          element: <Cart />,
         },
       ],
     },
